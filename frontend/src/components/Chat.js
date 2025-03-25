@@ -6,12 +6,14 @@ const Chat = () => {
   const navigate = useNavigate();
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState("");
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   // ✅ Fetch all messages
   useEffect(() => {
     const fetchMessages = async () => {
+      const apiUrl = process.env.REACT_APP_API_URL;
       try {
-        const res = await axios.get("http://localhost:5000/api/messages"); // Fetch all messages
+        const res = await axios.get(`${apiUrl}/api/messages`); // Fetch all messages
         setMessages(res.data);
       } catch (error) {
         console.error("Error fetching messages:", error);
@@ -31,7 +33,7 @@ const Chat = () => {
   //   }
 
   //   try {
-  //     const res = await axios.post("http://localhost:5000/api/messages/send", { text }); // ✅ Correctly sending text only
+  //     const res = await axios.post("${apiUrl}/api/messages/send", { text }); // ✅ Correctly sending text only
 
   //     if (res.data && res.data.newMessage) {
   //       setMessages((prevMessages) => [...prevMessages, res.data.newMessage]); // ✅ Update messages immediately
@@ -57,7 +59,7 @@ const Chat = () => {
     }
   
     try {
-      const res = await axios.post("http://localhost:5000/api/messages/send", { 
+      const res = await axios.post(`${apiUrl}/api/messages/send`, { 
         userId: user.userId, 
         text 
       });

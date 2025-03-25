@@ -8,15 +8,17 @@ const Register = () => {
   const [name, setName] = useState("");
   const [uniqueCode, setUniqueCode] = useState("");
   const navigate = useNavigate();
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleRegister = async () => {
+    const apiUrl = process.env.REACT_APP_API_URL;
     if (!name || !uniqueCode) {
       alert("Please fill in all fields!");
       return;
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/register", { name, uniqueCode });
+      const res = await axios.post(`${apiUrl}/api/auth/register`, { name, uniqueCode });
 
       alert("Registration successful! Redirecting to login...");
       navigate("/"); // Redirect to login page

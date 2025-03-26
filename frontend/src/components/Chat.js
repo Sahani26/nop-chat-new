@@ -117,7 +117,7 @@ const Chat = () => {
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
-      <button onClick={sendMessage}>Send</button>
+      <button onClick={sendMessage} className="bt">Send</button>
     </div>
   );
 };

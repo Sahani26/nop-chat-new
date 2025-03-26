@@ -1,8 +1,7 @@
- 
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";  
 import axios from "axios";
+import './Register.css'; // Don't forget to import the CSS file
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -11,7 +10,6 @@ const Register = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleRegister = async () => {
-    const apiUrl = process.env.REACT_APP_API_URL;
     if (!name || !uniqueCode) {
       alert("Please fill in all fields!");
       return;
@@ -19,8 +17,6 @@ const Register = () => {
 
     try {
       const res = await axios.post(`${apiUrl}/api/auth/register`, { name, uniqueCode });
-
-     
       navigate("/"); // Redirect to login page
     } catch (error) {
       alert("Error during registration. Please try again.");
@@ -28,24 +24,30 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <input 
-        type="text" 
-        placeholder="Enter Name" 
-        value={name}
-        onChange={(e) => setName(e.target.value)} 
-      />
-      <input 
-        type="text" 
-        placeholder="Enter Unique Code" 
-        value={uniqueCode}
-        onChange={(e) => setUniqueCode(e.target.value)} 
-      />
-      <button onClick={handleRegister}>Register</button>
-      <p>
-        Already registered? <button onClick={() => navigate("/")}>Login</button>
-      </p>
+    <div className="register-container">
+      <div className="register-box">
+        <h2>Register</h2>
+        <input
+          type="text"
+          placeholder="Enter Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="register-input"
+        />
+        <input
+          type="text"
+          placeholder="Enter Unique Code"
+          value={uniqueCode}
+          onChange={(e) => setUniqueCode(e.target.value)}
+          className="register-input"
+        />
+        <button onClick={handleRegister} className="register-btn">
+          Register
+        </button>
+        <p className="login-link">
+          Already registered? <button onClick={() => navigate("/")} className="login-btn">Login</button>
+        </p>
+      </div>
     </div>
   );
 };

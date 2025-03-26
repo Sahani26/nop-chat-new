@@ -11,11 +11,13 @@ app.use(express.json());
  
 // app.use(cors());
 app.use(cors({
-  origin: "https://dummyserver-pi.vercel.app",  // ✅ Allow specific frontend URL
-  methods: ["GET", "POST", "PUT", "DELETE"],    // ✅ Allow required HTTP methods
-  allowedHeaders: ["Content-Type", "Authorization"],  // ✅ Allow headers
-  credentials: true,  // ✅ Allow credentials if needed
+  origin: "https://dummyserver-pi.vercel.app",  // ✅ Allow frontend domain
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
 }));
+
+
 const connectDB = async () => {
   try {
     await mongoose.connect('mongodb+srv://sunilsahani484:JjEXH8avdYNzmxBK@cluster0.sojau.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {

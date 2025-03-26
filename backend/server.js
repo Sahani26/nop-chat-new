@@ -8,12 +8,17 @@ require('dotenv').config();
 
 // Middleware
 app.use(express.json());
+ 
 // app.use(cors());
+app.use(cors({
+  origin: process.env.FRONT || "*", // Allow all or specific frontend
+  methods: ["GET", "POST", "PUT", "DELETE"], 
+  credentials: true,
+}));
+
 // app.use(cors({
 //   origin: `${process.env.FRONT}`
 // }));
- 
-app.use(cors());
 // Connect to DB
 // connectDB();
 const connectDB = async () => {

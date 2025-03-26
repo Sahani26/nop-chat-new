@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -7,6 +7,9 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState("");
   const apiUrl = process.env.REACT_APP_API_URL;
+
+  // Reference for the messages list container to scroll
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -22,6 +25,13 @@ const Chat = () => {
     const interval = setInterval(fetchMessages, 2000); // Auto-refresh every 2 seconds
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    // Scroll to the bottom when the messages change (new message added)
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   const sendMessage = async () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -75,6 +85,9 @@ const Chat = () => {
           </li>
         ))}
       </ul>
+
+      {/* This is the "anchor" element for scrolling */}
+      <div ref={messagesEndRef}></div>
 
       <div className="input-section">
         <input

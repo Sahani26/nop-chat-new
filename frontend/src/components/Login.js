@@ -32,7 +32,7 @@ const Login = () => {
         value={uniqueCode}
         onChange={(e) => setUniqueCode(e.target.value)} 
       />
-      <button onClick={handleLogin}>Login</button>
+      <button onClick={handleLogin}  className="bt">Login</button>
       <p>
         New user? <button onClick={() => navigate("/register")}>Register</button>
       </p>

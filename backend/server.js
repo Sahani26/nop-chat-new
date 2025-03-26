@@ -9,14 +9,7 @@ require('dotenv').config();
 // Middleware
 app.use(express.json());
  
-// app.use(cors());
-app.use(cors({
-  origin: "https://dummyserver-pi.vercel.app",  // ✅ Allow frontend domain
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
-}));
-
+app.use(cors());
 
 const connectDB = async () => {
   try {

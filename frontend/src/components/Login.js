@@ -1,16 +1,14 @@
- 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import './Login.css'; // Don't forget to import the CSS file
 
 const Login = () => {
   const [uniqueCode, setUniqueCode] = useState("");
   const navigate = useNavigate();
   const apiUrl = process.env.REACT_APP_API_URL;
 
-
   const handleLogin = async () => {
-    const apiUrl = process.env.REACT_APP_API_URL;
     try {
       const res = await axios.post(`${apiUrl}/api/auth/login`, { uniqueCode });
 
@@ -24,18 +22,23 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <input 
-        type="text" 
-        placeholder="Enter Unique Code" 
-        value={uniqueCode}
-        onChange={(e) => setUniqueCode(e.target.value)} 
-      />
-      <button onClick={handleLogin}  className="bt">Login</button>
-      <p>
-        New user? <button onClick={() => navigate("/register")}>Register</button>
-      </p>
+    <div className="login-container">
+      <div className="login-box">
+        <h2>Login</h2>
+        <input
+          type="text"
+          placeholder="Enter Unique Code"
+          value={uniqueCode}
+          onChange={(e) => setUniqueCode(e.target.value)}
+          className="login-input"
+        />
+        <button onClick={handleLogin} className="login-btn">
+          Login
+        </button>
+        <p className="register-link">
+          New user? <button onClick={() => navigate("/register")} className="register-btn">Register</button>
+        </p>
+      </div>
     </div>
   );
 };

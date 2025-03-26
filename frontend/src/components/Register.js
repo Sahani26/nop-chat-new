@@ -20,7 +20,7 @@ const Register = () => {
     try {
       const res = await axios.post(`${apiUrl}/api/auth/register`, { name, uniqueCode });
 
-      alert("Registration successful! Redirecting to login...");
+     
       navigate("/"); // Redirect to login page
     } catch (error) {
       alert("Error during registration. Please try again.");

@@ -21,7 +21,7 @@ const Chat = () => {
     };
 
     fetchMessages();
-    const interval = setInterval(fetchMessages, 5000); // Auto-refresh every 5 sec
+    const interval = setInterval(fetchMessages, 2000); // Auto-refresh every 5 sec
     return () => clearInterval(interval);
   }, []);
 

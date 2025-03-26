@@ -3,6 +3,10 @@ const User = require("../models/User");
 
 const router = express.Router();
 
+// Test API route
+router.get("/", (req, res) => {
+  res.json({ message: "API is working!" });
+});
 // Register New User
 router.post("/register", async (req, res) => {
   const { name, uniqueCode } = req.body;

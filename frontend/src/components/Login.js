@@ -1,19 +1,16 @@
-import { useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+ 
 
 const Login = () => {
+  const [uniqueCode, setUniqueCode] = useState("");
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  useEffect(() => {
-    if (user) {
-      navigate("/chat");
-    }
-  }, [user, navigate]);
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post(`${apiUrl}/api/auth/login`, { uniqueCode });
+      const res = await axios.post(${apiUrl}/api/auth/login, { uniqueCode });
 
       if (res.data) {
         localStorage.setItem("user", JSON.stringify(res.data)); // ✅ Store user info
@@ -47,4 +44,3 @@ const Login = () => {
 };
 
 export default Login;
- 

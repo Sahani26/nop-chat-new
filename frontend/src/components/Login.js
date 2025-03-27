@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
- 
 
 const Login = () => {
   const [uniqueCode, setUniqueCode] = useState("");
@@ -10,11 +9,11 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post(${apiUrl}/api/auth/login, { uniqueCode });
+      const res = await axios.post(`${apiUrl}/api/auth/login`, { uniqueCode }); // Corrected the string interpolation
 
       if (res.data) {
-        localStorage.setItem("user", JSON.stringify(res.data)); // ✅ Store user info
-        navigate("/chat"); // Redirect to chat
+        localStorage.setItem("user", JSON.stringify(res.data));
+        navigate("/chat");
       }
     } catch (error) {
       alert("Invalid credentials or user not registered.");
@@ -44,4 +43,3 @@ const Login = () => {
 };
 
 export default Login;
-

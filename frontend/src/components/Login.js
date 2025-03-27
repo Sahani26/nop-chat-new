@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
- 
 
 const Login = () => {
-  const [uniqueCode, setUniqueCode] = useState("");
   const navigate = useNavigate();
-  const apiUrl = process.env.REACT_APP_API_URL;
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  useEffect(() => {
+    if (user) {
+      navigate("/chat");
+    }
+  }, [user, navigate]);
 
   const handleLogin = async () => {
     try {
@@ -44,3 +47,4 @@ const Login = () => {
 };
 
 export default Login;
+ 

@@ -243,11 +243,12 @@ h2 {
 }
 
 .login-btn {
-  background: none;
-  border: none;
-  color: #4facfe;
-  cursor: pointer;
-  text-decoration: underline;
+     background: none;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    text-decoration: underline;
+    background-color: #4facfe;
 }
 
 .login-btn:hover {

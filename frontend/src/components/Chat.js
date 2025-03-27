@@ -22,7 +22,7 @@ const Chat = () => {
     };
 
     fetchMessages();
-    const interval = setInterval(fetchMessages, 2000); // Auto-refresh every 2 seconds
+    const interval = setInterval(fetchMessages, 1000); // Auto-refresh every 2 seconds
     return () => clearInterval(interval);
   }, []);
 

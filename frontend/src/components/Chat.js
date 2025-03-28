@@ -3,74 +3,18 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Chat = () => {
-  const navigate = useNavigate();
-  const [messages, setMessages] = useState([]);
-  const [text, setText] = useState("");
-  const apiUrl = process.env.REACT_APP_API_URL;
+  // ... existing state and functions ...
 
-  // Reference for the messages list container to scroll
-  const messagesEndRef = useRef(null);
-
-  useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        const res = await axios.get(`${apiUrl}/api/messages`);
-        setMessages(res.data);
-      } catch (error) {
-        console.error("Error fetching messages:", error);
-      }
-    };
-
-    fetchMessages();
-    const interval = setInterval(fetchMessages, 1000); // Auto-refresh every 2 seconds
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    // Scroll to the bottom when the messages change (new message added)
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [messages]);
-
-  const sendMessage = async () => {
+  // Add this function to determine if message is from current user
+  const isCurrentUser = (messageUserId) => {
     const user = JSON.parse(localStorage.getItem("user"));
-
-    if (!text.trim()) {
-      alert("Enter a message before sending");
-      return;
-    }
-
-    if (!user || !user.userId) {
-      alert("User not logged in. Please login first.");
-      navigate("/");
-      return;
-    }
-
-    try {
-      const res = await axios.post(`${apiUrl}/api/messages/send`, { 
-        userId: user.userId, 
-        text 
-      });
-
-      if (res.data && res.data.newMessage) {
-        setMessages((prevMessages) => [...prevMessages, res.data.newMessage]);
-      }
-
-      setText(""); // Clear input field after sending
-    } catch (error) {
-      console.error("Error sending message:", error);
-    }
-  };
-
-  const handleLogout = () => {
-    navigate("/"); // Redirect to home/login page
+    return user && user.userId === messageUserId;
   };
 
   return (
     <div className="chat-container">
-      <div className="header">
-        <h2>Chat</h2>
+      <div className="chat-header">
+        <h2>Chat App</h2>
         <button onClick={handleLogout} className="logout-btn">
           Logout
         </button>
@@ -78,26 +22,41 @@ const Chat = () => {
 
       <ul className="messages-list">
         {messages.map((msg) => (
-          <li key={msg._id} className="message-item">
-            <strong>{msg.userId?.name || "Anonymous"}</strong>
-            <br />
-            {msg.text}
+          <li
+            key={msg._id}
+            className={`message-item ${
+              isCurrentUser(msg.userId?._id) ? "sent" : "received"
+            }`}
+          >
+            <div className="message-meta">
+              <span className="message-sender">
+                {msg.userId?.name || "Anonymous"}
+              </span>
+              <span className="message-time">
+                {new Date(msg.createdAt).toLocaleTimeString([], {
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}
+              </span>
+            </div>
+            <div className="message-text">{msg.text}</div>
           </li>
         ))}
+        <div ref={messagesEndRef} />
       </ul>
 
-      {/* This is the "anchor" element for scrolling */}
-      <div ref={messagesEndRef}></div>
-
-      <div className="input-section">
+      <div className="chat-footer">
         <input
           type="text"
           placeholder="Type a message..."
           value={text}
           onChange={(e) => setText(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
           className="message-input"
         />
-        <button onClick={sendMessage} className="send-btn">Send</button>
+        <button onClick={sendMessage} className="send-btn">
+          Send
+        </button>
       </div>
     </div>
   );

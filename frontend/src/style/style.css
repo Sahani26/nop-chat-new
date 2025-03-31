@@ -1,4 +1,8 @@
 /* General Styles */
+body {
+    background-image: url(https://www.opensourcecms.com/wp-content/uploads/Screen-Shot-2018-03-29-at-17.35.19.png);
+}
+
  .chat-container {
    padding: 20px;
    font-family: Arial, sans-serif;
